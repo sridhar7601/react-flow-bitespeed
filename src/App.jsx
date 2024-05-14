@@ -1,3 +1,4 @@
+// App.js
 import React, { useState, useRef, useCallback } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
@@ -5,35 +6,36 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   Controls,
+  MiniMap
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-
 import Sidebar from './components/Sidebar';
-
 import './index.css';
+import CustomNode from './components/CustomNode';
 
-const initialNodes = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
-  },
+const nodeTypes = {
+  custom: CustomNode,
+};
+
+const initNodes = [
+  
+];
+
+const initEdges = [
+  
 ];
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
-const DnDFlow = () => {
+const App = () => {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [selectedNode, setSelectedNode] = useState(null);
 
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [],
-  );
+  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -43,35 +45,32 @@ const DnDFlow = () => {
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
-
       const type = event.dataTransfer.getData('application/reactflow');
-
-      // check if the dropped element is valid
       if (typeof type === 'undefined' || !type) {
         return;
       }
-
-      // reactFlowInstance.project was renamed to reactFlowInstance.screenToFlowPosition
-      // and you don't need to subtract the reactFlowBounds.left/top anymore
-      // details: https://reactflow.dev/whats-new/2023-11-10
       const position = reactFlowInstance.screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
       const newNode = {
         id: getId(),
-        type,
+        type: 'custom',
         position,
-        data: { label: `${type} node` },
+        data: {
+          label: type === 'textnode' ? 'Text Node' : '',
+          name: 'Jane Doe',
+          job: 'CEO',
+          emoji: '😎',
+        },
       };
-
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance],
+    [reactFlowInstance]
   );
 
   return (
-    <div className="dndflow">
+    <div className="dndflow" style={{ height: '90vh' }}>
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
@@ -83,15 +82,27 @@ const DnDFlow = () => {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            nodeTypes={nodeTypes}
             fitView
+            onNodeClick={(event, node) => setSelectedNode(node)}
+            className="bg-teal-50"
+
           >
+            <MiniMap />
             <Controls />
           </ReactFlow>
         </div>
-        <Sidebar />
+        <Sidebar
+          nodes={nodes}
+          edges={edges}
+          selectedNode={selectedNode}
+          setSelectedNode={setSelectedNode}
+          setNodes={setNodes}
+          setSelectedElements={() => setSelectedNode(null)}
+        />
       </ReactFlowProvider>
     </div>
   );
 };
 
-export default DnDFlow;
+export default App;
