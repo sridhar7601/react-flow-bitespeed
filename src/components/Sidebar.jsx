@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Sidebar({
   nodes,
@@ -28,9 +30,9 @@ export default function Sidebar({
     );
 
     if (nodesWithoutEdges.length > 0) {
-      alert(`Nodes without edges: ${nodesWithoutEdges.map((node) => node.data.label).join(', ')}`);
+      toast.warn(`Nodes without edges: ${nodesWithoutEdges.map((node) => node.data.label).join(', ')}`);
     } else {
-      alert('All nodes have at least one edge.');
+      toast.success('All nodes have at least one edge.');
     }
   };
 
@@ -40,7 +42,6 @@ export default function Sidebar({
     );
     setNodes(updatedNodes);
     setSelectedElements([]);
-    // alert('Node text saved.');
   };
 
   const onDragStart = (event, nodeType) => {
@@ -55,6 +56,7 @@ export default function Sidebar({
         <button
           className="bg-green-500 text-white rounded p-2 hover:bg-green-600"
           onClick={checkNodesWithEdges}
+          disabled={nodes.length === 0} // Disable button if no nodes
         >
           Check Nodes
         </button>
@@ -102,22 +104,9 @@ export default function Sidebar({
               </div>
             </div>
           </div>
-          <div
-            className="bg-white p-3 border-2 border-gray-500 rounded cursor-move flex justify-center items-center text-gray-500 hover:bg-gray-500 hover:text-white transition-colors duration-200 mt-4"
-            onDragStart={(event) => onDragStart(event, 'imagenode')}
-            draggable
-          >
-            Image Node
-          </div>
-          <div
-            className="bg-white p-3 border-2 border-gray-500 rounded cursor-move flex justify-center items-center text-gray-500 hover:bg-gray-500 hover:text-white transition-colors duration-200 mt-4"
-            onDragStart={(event) => onDragStart(event, 'colorpickernode')}
-            draggable
-          >
-            Color Picker Node
-          </div>
         </>
       )}
+      <ToastContainer />
     </aside>
   );
 }

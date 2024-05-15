@@ -88,7 +88,7 @@ const App = () => {
             className="bg-teal-50"
 
           >
-            <MiniMap />
+            {/* <MiniMap /> */}
             <Controls />
           </ReactFlow>
         </div>

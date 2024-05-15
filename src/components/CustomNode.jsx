@@ -13,8 +13,8 @@ function CustomNode({ data }) {
           <div className="text-gray-500">{data.job}</div>
         </div>
       </div>
-      <Handle type="target" position={Position.Top} className="w-16 !bg-teal-500" />
-      <Handle type="source" position={Position.Bottom} className="w-16 !bg-teal-500" />
+      <Handle type="target" position={Position.Right}  />
+      <Handle type="source" position={Position.Left}  />
     </div>
   );
 }
