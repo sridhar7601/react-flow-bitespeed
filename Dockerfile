@@ -1,14 +1,16 @@
+# Use the official Node.js 18 image
 FROM node:18-alpine
+
 WORKDIR /app
+
 COPY package*.json ./
 
-# Install dependencies and copy
+# Install dependencies
 RUN npm ci
+
 COPY . .
 
-# Build the React app and expose
-RUN npm run build
 EXPOSE 5173
 
 # Start the app
-CMD ["npm", "run", "dev","--host"]
+CMD ["npm", "run", "dev"]
