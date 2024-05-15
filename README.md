@@ -1,6 +1,6 @@
 # React Flow
 
-###About
+### About
 A reactflow app that can be used to mockup a flow
 
 # Getting Started
