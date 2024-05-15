@@ -1,4 +1,4 @@
-name: Deploy Node Application
+name: Deploy ReactFlow in docker
 
 on:
   push:
@@ -11,9 +11,18 @@ jobs:
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
+
+      - name: Debug Docker Username
+        run: echo ${{ secrets.DOCKER_USERNAME }}
+
       - name: Login to Docker Hub
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Build Docker image
         run: docker build -t sridzar007/react-flow-bitespeed .
+
       - name: Publish image to Docker Hub
         run: docker push sridzar007/react-flow-bitespeed:latest
