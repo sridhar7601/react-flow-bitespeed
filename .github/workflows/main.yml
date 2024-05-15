@@ -1,0 +1,19 @@
+name: Deploy Node Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Build Docker image
+        run: docker build -t sridzar007/react-flow-bitespeed .
+      - name: Publish image to Docker Hub
+        run: docker push sridzar007/react-flow-bitespeed:latest
