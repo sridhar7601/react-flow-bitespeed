@@ -1,13 +1,34 @@
-# React + Vite
+# React Flow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+###About
+A reactflow app that can be used to mockup a flow
 
-Currently, two official plugins are available:
+# Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/sridhar7601/react-flow-bitespeed.git
+2. Navigate into the project directory:
+
+   ```bash
+   cd eact-flow-bitespeed
+3. Install dependencies:(Use either npm or yarn):
+
+   ```bash
+   npm install
+   #or
+   yarn install
+
+4. Run the code:
+    ```bash
+    npm run dev
+
+
+
 
 # For Docker Pull using 
 ```bash
-docker push sridzar007/react-flow-bitespeed:tagname
-```
+docker push sridzar007/react-flow-bitespeed:tagname 
