@@ -14,7 +14,7 @@ A reactflow app that can be used to mockup a flow
 2. Navigate into the project directory:
 
    ```bash
-   cd eact-flow-bitespeed
+   cd react-flow-bitespeed
 3. Install dependencies:(Use either npm or yarn):
 
    ```bash
