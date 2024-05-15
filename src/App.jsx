@@ -35,8 +35,16 @@ const App = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
 
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
-
+  const onConnect = useCallback(
+    (params) => {
+      const newEdge = {
+        ...params,
+        animated: true, // Add the animated prop here
+      };
+      setEdges((eds) => addEdge(newEdge, eds));
+    },
+    [setEdges]
+  );
   const onDragOver = useCallback((event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
@@ -60,7 +68,7 @@ const App = () => {
         data: {
           label: type === 'textnode' ? 'Text Node' : '',
           name: 'Jane Doe',
-          job: 'CEO',
+          job: '',
           emoji: '😎',
         },
       };
