@@ -26,9 +26,6 @@ A reactflow app that can be used to mockup a flow
     ```bash
     npm run dev
 
-
-
-
 # For Docker Pull using 
 ```bash
-docker push sridzar007/react-flow-bitespeed:tagname 
+docker pull sridzar007/react-flow-bitespeed:latest
